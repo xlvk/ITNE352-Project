@@ -4,6 +4,7 @@ import threading
 import urllib.error
 from urllib.request import urlopen
 import json
+import flightUtils
 
 # AviationStack API key
 api_key = "ec9a339729e37e6f9dcb2531ca197d4e"
@@ -56,73 +57,25 @@ sock_a.send("Server >> What option to choose?".encode())
 OptionChose = sock_a.recv(1024).decode("ascii")
 print(f"Option Choose : {OptionChose}")
 
-
-## returns data for all landed flights
-## returns are in the form of a 2d Array
-## 5A
-def searchForArrival(ICAO_CODE):
-    rawjsonData = get_flight_info(ICAO_CODE)
-    vals = []
-    i = 0
-    data = rawjsonData.get("data", [])
-    for flight in data:
-        if flight.get("flight_status") == "landed":
-            # if flight landed, construct a array of data
-            returns = [
-                data[i]["flight"]["iata"],
-                data[i]["departure"]["airport"],
-                data[i]["arrival"]["actual"],
-                data[i]["arrival"]["terminal"],
-                data[i]["arrival"]["gate"],
-            ]
-            ## append to rest
-            vals.append(returns)
-        i += 1
-    return vals
-
-
-## Scan all flights from a specific airport
-## @param - ICAO codes, one for source airport, and one for destination
-## 5C
-def searchForSpecificCode(ICAO_CODE_FOR_CURRENT, DESIRED_AIRPORT_ICAO):
-    rawjsonData = get_flight_info(ICAO_CODE_FOR_CURRENT)
-    vals = []
-    data = rawjsonData.get("data", [])
-    for i in range(0, len(data) - 1):
-        if data[i]["departure"]["icao"] == DESIRED_AIRPORT_ICAO:
-            returns = [
-                data[i]["flight"]["iata"],
-                data[i]["departure"]["airport"],
-                data[i]["departure"]["scheduled"],
-                data[i]["arrival"]["estimated"],
-                data[i]["departure"]["gate"],
-                data[i]["arrival"]["gate"],
-                data[i]["flight_status"],
-            ]
-            vals.append(returns)
-    return vals
-
-
-## scan for a specific flight
-## IATA code of flight needed
-### 5D
-def searchForSpecificFlight(CURRENT_AIRPORT_ICAO, IATA_CODE):
-    rawjsonData = get_flight_info(CURRENT_AIRPORT_ICAO)
-    data = rawjsonData.get("data", [])
-    for i in range(0, len(data) - 1):
-        if data[i]["flight"]["iata"] == IATA_CODE:
-            return [
-                data[i]["flight"]["iata"],
-                data[i]["departure"]["airport"],
-                data[i]["departure"]["gate"],
-                data[i]["departure"]["terminal"],
-                data[i]["arrival"]["airport"],
-                data[i]["arrival"]["gate"],
-                data[i]["arrival"]["terminal"],
-                data[i]["departure"]["scheduled"],
-                data[i]["arrival"]["scheduled"],
-            ]
-
+match OptionChose:
+    case 1:
+        sock_a.send(json.dumps(flightUtils.searchForArrival(airport_code)))
+    case 2:
+        sock_a.send(json.dumps(flightUtils.searchForDelayed(airport_code)))
+    case 3:
+        sock_a.send("Server >> what is the desired ICAO for results?".encode())
+        d_airport_code = sock_a.recv(1024).decode("ascii")
+        sock_a.send(
+            json.dumps(flightUtils.searchForSpecificCode(airport_code, d_airport_code))
+        )
+    case 4:
+        sock_a.send("Server >> what is the desired IATA for the flight?".encode())
+        d_IATA = sock_a.recv(1024).decode("ascii")
+        sock_a.send(
+            json.dumps(flightUtils.searchForSpecificFlight(airport_code, d_IATA))
+        )
+    case _:
+        sock_a.send("Server >> 400 INVALID OPTION?".encode())
 
 sock_a.close()
 ss.close()
