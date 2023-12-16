@@ -9,7 +9,6 @@ import json
 api_key = "ec9a339729e37e6f9dcb2531ca197d4e"
 
 
-# Function to retrieve flight information from AviationStack API
 def get_flight_info(airport_code):
     api_url = f"http://api.aviationstack.com/v1/flights?access_key={api_key}&limit=100&arr_icao={airport_code}"
 
@@ -24,26 +23,11 @@ def get_flight_info(airport_code):
         return None
 
 
-def get_flight_info_V2(airport_code):
-    api_url = f"http://api.aviationstack.com/v1/flights?access_key={api_key}&limit=100&arr_icao={airport_code}"
-
-    try:
-        # Make a GET request to the API using urllib
-        with urlopen(api_url) as response:
-            # Read and parse the JSON response
-            d = json.loads(response.read().decode("utf-8"))
-            return d
-
-    except urllib.error.URLError as e:
-        print(f"Error: Unable to retrieve data from API. {e}")
-        return None
-
-
 ## returns data for all landed flights
 ## returns are in the form of a 2d Array
 ## 5A
 def searchForArrival(ICAO_CODE):
-    rawjsonData = get_flight_info_V2(ICAO_CODE)
+    rawjsonData = get_flight_info(ICAO_CODE)
     vals = []
     i = 0
     data = rawjsonData.get("data", [])
@@ -67,7 +51,7 @@ def searchForArrival(ICAO_CODE):
 ## @param - ICAO code for source airport
 ## 5B
 def searchForDelayed(ICAO_CODE):
-    rawjsonData = get_flight_info_V2(ICAO_CODE)
+    rawjsonData = get_flight_info(ICAO_CODE)
     vals = []
     data = rawjsonData.get("data", [])
     for i in range(0, len(data) - 1):
@@ -91,7 +75,7 @@ def searchForDelayed(ICAO_CODE):
 ## @param - ICAO codes, one for source airport, and one for destination
 ## 5C
 def searchForSpecificCode(ICAO_CODE_FOR_CURRENT, DESIRED_AIRPORT_ICAO):
-    rawjsonData = get_flight_info_V2(ICAO_CODE_FOR_CURRENT)
+    rawjsonData = get_flight_info(ICAO_CODE_FOR_CURRENT)
     vals = []
     data = rawjsonData.get("data", [])
     for i in range(0, len(data) - 1):
@@ -113,7 +97,7 @@ def searchForSpecificCode(ICAO_CODE_FOR_CURRENT, DESIRED_AIRPORT_ICAO):
 ##@param - current ICAO + IATA code of flight needed
 ### 5D
 def searchForSpecificFlight(CURRENT_AIRPORT_ICAO, IATA_CODE):
-    rawjsonData = get_flight_info_V2(CURRENT_AIRPORT_ICAO)
+    rawjsonData = get_flight_info(CURRENT_AIRPORT_ICAO)
     data = rawjsonData.get("data", [])
     for i in range(0, len(data) - 1):
         if data[i]["flight"]["iata"] == IATA_CODE:
