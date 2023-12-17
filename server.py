@@ -148,16 +148,20 @@ print(f"Option Choose : {OptionChose}")
 
 match OptionChose:
     case 1:
+        print(json.dumps(searchForArrival(airport_code)))
         sock_a.send(json.dumps(searchForArrival(airport_code)))
     case 2:
+        print(json.dumps(searchForDelayed(airport_code)))
         sock_a.send(json.dumps(searchForDelayed(airport_code)))
     case 3:
         sock_a.send("Server >> what is the desired ICAO for results?".encode())
         d_airport_code = sock_a.recv(1024).decode("ascii")
+        print(json.dumps(searchForSpecificCode(airport_code, d_airport_code)))
         sock_a.send(json.dumps(searchForSpecificCode(airport_code, d_airport_code)))
     case 4:
         sock_a.send("Server >> what is the desired IATA for the flight?".encode())
         d_IATA = sock_a.recv(1024).decode("ascii")
+        print(json.dumps(searchForSpecificFlight(airport_code, d_IATA)))
         sock_a.send(json.dumps(searchForSpecificFlight(airport_code, d_IATA)))
     case _:
         sock_a.send("Server >> 400 INVALID OPTION?".encode())
