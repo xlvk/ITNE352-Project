@@ -3,7 +3,7 @@
     "limit": 100,
     "offset": 0,
     "count": 100,
-    "total": 381
+    "total": 382
   },
   "data": [
     {
@@ -1988,7 +1988,7 @@
         "iata": "DXB",
         "icao": "OMDB",
         "terminal": "1",
-        "gate": null,
+        "gate": "D1",
         "delay": null,
         "scheduled": "2023-12-17T13:00:00+00:00",
         "estimated": "2023-12-17T13:00:00+00:00",
@@ -3049,6 +3049,52 @@
     },
     {
       "flight_date": "2023-12-17",
+      "flight_status": "scheduled",
+      "departure": {
+        "airport": "Zia International",
+        "timezone": "Asia/Dhaka",
+        "iata": "DAC",
+        "icao": "VGHS",
+        "terminal": "1",
+        "gate": null,
+        "delay": null,
+        "scheduled": "2023-12-17T19:45:00+00:00",
+        "estimated": "2023-12-17T19:45:00+00:00",
+        "actual": null,
+        "estimated_runway": null,
+        "actual_runway": null
+      },
+      "arrival": {
+        "airport": "Bahrain International",
+        "timezone": "Asia/Bahrain",
+        "iata": "BAH",
+        "icao": "OBBI",
+        "terminal": null,
+        "gate": null,
+        "baggage": null,
+        "delay": null,
+        "scheduled": "2023-12-17T23:10:00+00:00",
+        "estimated": "2023-12-17T23:10:00+00:00",
+        "actual": null,
+        "estimated_runway": null,
+        "actual_runway": null
+      },
+      "airline": {
+        "name": "Gulf Air",
+        "iata": "GF",
+        "icao": "GFA"
+      },
+      "flight": {
+        "number": "249",
+        "iata": "GF249",
+        "icao": "GFA249",
+        "codeshared": null
+      },
+      "aircraft": null,
+      "live": null
+    },
+    {
+      "flight_date": "2023-12-17",
       "flight_status": "landed",
       "departure": {
         "airport": "Sharjah",
@@ -3102,7 +3148,7 @@
         "iata": "BKK",
         "icao": "VTBS",
         "terminal": null,
-        "gate": null,
+        "gate": "E9",
         "delay": null,
         "scheduled": "2023-12-17T16:20:00+00:00",
         "estimated": "2023-12-17T16:20:00+00:00",
@@ -4868,52 +4914,6 @@
           "flight_iata": "gf70",
           "flight_icao": "gfa70"
         }
-      },
-      "aircraft": null,
-      "live": null
-    },
-    {
-      "flight_date": "2023-12-17",
-      "flight_status": "unknown",
-      "departure": {
-        "airport": "Istanbul Airport",
-        "timezone": "Europe/Istanbul",
-        "iata": "IST",
-        "icao": "LTFM",
-        "terminal": null,
-        "gate": null,
-        "delay": null,
-        "scheduled": "2023-12-17T03:20:00+00:00",
-        "estimated": "2023-12-17T03:20:00+00:00",
-        "actual": null,
-        "estimated_runway": null,
-        "actual_runway": null
-      },
-      "arrival": {
-        "airport": "Bahrain International",
-        "timezone": "Asia/Bahrain",
-        "iata": "BAH",
-        "icao": "OBBI",
-        "terminal": "5",
-        "gate": null,
-        "baggage": null,
-        "delay": null,
-        "scheduled": "2023-12-17T07:30:00+00:00",
-        "estimated": "2023-12-17T07:30:00+00:00",
-        "actual": null,
-        "estimated_runway": null,
-        "actual_runway": null
-      },
-      "airline": {
-        "name": "Turkish Airlines",
-        "iata": "TK",
-        "icao": "THY"
-      },
-      "flight": {
-        "number": "6560",
-        "iata": "TK6560",
-        "icao": "THY6560",
-        "codeshared": null
       },
       "aircraft": null,
       "live": null
